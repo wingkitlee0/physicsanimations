@@ -9,11 +9,12 @@ def ellipse(a, ecc, pom, theta):
     y = r*np.sin(theta)
     return x, y
 
-fig, ax = plt.subplots()
+fig, ax = plt.subplots(figsize=(6,6))
+ax.axis("off")
 ax.set_aspect("equal")
 ax.set_xlim(-4,4)
 ax.set_ylim(-4,4)
-ax.scatter([0.0],[0.0],marker="*", s=100, c='C1')
+ax.scatter([0.0],[0.0],marker="*", s=200, c='C1')
 
 tt = np.linspace(0.0, 2.0*np.pi, 200)
 aa = np.array([1.0, 2.0]) # semi-major axis
@@ -24,7 +25,7 @@ lines = []
 for i, a in enumerate(aa):
     print(a, i)
     x, y = ellipse(a, er[i], 0.0, tt)
-    line, = ax.fill(x,y, fill=False)
+    line, = ax.fill(x,y, fill=False, lw=2)
     lines.append(line)
 
 
@@ -42,7 +43,7 @@ def animate(i):
 
 
 ani = animation.FuncAnimation(
-    fig, animate, init_func=init, interval=5, blit=True, frames=200, save_count=50)
+    fig, animate, init_func=init, interval=5, blit=True, frames=400, save_count=50)
 
 # To save the animation, use e.g.
 #
@@ -57,6 +58,6 @@ ani = animation.FuncAnimation(
 #plt.show()
 #ani.save("movie.mp4")
 from matplotlib.animation import FFMpegWriter
-writer = FFMpegWriter(fps=50, metadata=dict(artist='Me'), bitrate=300)
-ani.save("movie.mp4", writer=writer)
+writer = FFMpegWriter(fps=50, metadata=dict(artist='Kit Lee', comment="precessing ellipses"), bitrate=300)
+ani.save("movie.mp4", writer=writer, dpi=150)
 #ani.save("movie.mp4", writer="ffmpeg")
